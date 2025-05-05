@@ -1,0 +1,156 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+/* Sidebar fixa */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 200px;
+  height: 100%;
+  background: #111;
+  padding-top: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li + li {
+  margin-top: 15px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px 15px;
+  color: #FFD700;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background: #333;
+}
+
+/* Conteúdo à direita da sidebar */
+.main {
+  margin-left: 200px;
+  width: calc(100% - 200px);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Banner completamente visível */
+.banner {
+  flex-shrink: 0;
+}
+
+.banner-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Conteúdo geral */
+.content {
+  padding: 20px;
+  flex: 1;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Grid dos times */
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Card base */
+.team-card {
+  position: relative;
+  background-size: contain;
+  background-position: center;
+  color: #fff;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  transition: transform 0.2s ease;
+}
+
+.team-card:hover {
+  transform: scale(1.03);
+}
+
+/* Sobreposição escura para legibilidade */
+.team-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
+  z-index: 0;
+}
+
+.team-card h3,
+.team-card p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+}
+
+/* Específicos para cada fundo */
+.csgo-m {
+  background-image: url('../ProjetoFuria/Img/furia_logo.webp');
+}
+.csgo-f {
+  background-image: url('../ProjetoFuria/Img/furia_logo.webp');
+}
+.valorant-m {
+  background-image: url('../ProjetoFuria/Img/furia_logo.webp');
+}
+.valorant-f {
+  background-image: url('../ProjetoFuria/Img/furia_logo.webp');
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .teams-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    width: 60px;
+  }
+
+  .main {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+  }
+
+  .team-card {
+    height: 180px;
+  }
+}

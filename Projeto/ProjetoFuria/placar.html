@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Placar ao Vivo</title>
+  <link rel="stylesheet" href="style_placar.css" />
+  <script src="../ProjetoFuria/JavaScript/placar.js"></script>
+</head>
+<body>
+
+  <!-- Sidebar fixa -->
+  <aside class="sidebar">
+    <nav>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="programação.html">Programação</a></li>
+        <li><a href="placar.html" class="active">Placar ao Vivo</a></li>
+        <li><a href="chat.html">Chat</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Conteúdo Principal -->
+  <div class="content-wrapper">
+    <!-- Banner -->
+    <header class="banner">
+      <img src="../ProjetoFuria/Img/banner.png" alt="FURIA Logo" class="banner-img">
+    </header>
+
+    <!-- Placar -->
+    <main class="main-content">
+      <h2 class="placar-title">🏆 Placar ao Vivo</h2>
+      
+      <div class="scoreboard">
+        <div class="team-container">
+          <div class="team-name">FURIA</div>
+          <div class="team-score" id="furia-score">0</div>
+        </div>
+        <div class="separator">:</div>
+        <div class="team-container">
+          <div class="team-name">NAVI</div>
+          <div class="team-score" id="navi-score">0</div>
+        </div>
+      </div>
+
+      <div class="status" id="match-status">Partida em andamento...</div>
+    </main>
+  </div>
+
+  <!-- Script para Atualizar o Placar -->
+  <script>
+    let furiaScore = 0;
+    let naviScore = 0;
+    let gameEnded = false;
+  
+    // Função para atualizar o placar e salvar no localStorage
+    function updateScore() {
+      if (gameEnded) return;
+  
+      // Simula quem marcou ponto
+      const teamScored = Math.random() < 0.5 ? 'furia' : 'navi';
+  
+      if (teamScored === 'furia') furiaScore++;
+      else naviScore++;
+  
+      document.getElementById("furia-score").textContent = furiaScore;
+      document.getElementById("navi-score").textContent = naviScore;
+  
+      // Verifica se a partida deve acabar
+      if ((furiaScore >= 13 || naviScore >= 13) && Math.abs(furiaScore - naviScore) >= 2) {
+        document.getElementById("match-status").textContent = "Partida encerrada!";
+        gameEnded = true;
+      }
+  
+      // Armazena a atualização no localStorage
+      const matchData = {
+        furiaScore: furiaScore,
+        naviScore: naviScore,
+        gameEnded: gameEnded,
+        matchStatus: gameEnded ? "Partida encerrada!" : "Partida em andamento..."
+      };
+  
+      localStorage.setItem("liveMatchData", JSON.stringify(matchData));
+    }
+  
+    // Atualiza o placar a cada 20 segundos
+    setInterval(updateScore, 20000);
+    updateScore();
+  </script>
+  
+
+</body>
+</html>

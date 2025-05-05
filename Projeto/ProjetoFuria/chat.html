@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chat ao Vivo da FURIA</title>
+
+  <link rel="stylesheet" href="chat_style.css">
+  <script defer src="../ProjetoFuria/JavaScript/chat.js"></script>
+</head>
+
+<body>
+
+  <aside class="sidebar">
+    <nav>
+      <ul class="nav-list">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="programação.html">Programação</a></li>
+        <li><a href="placar.html">Placar ao Vivo</a></li>
+        <li><a href="chat.html" class="active">Chat</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Conteúdo principal -->
+  <div class="content-wrapper">
+
+    <!-- Banner no topo -->
+    <div class="banner">
+      <img src="../ProjetoFuria/Img/banner.png" alt="Banner FURIA" class="banner-img">
+    </div>
+
+    <!-- Área live: vídeo + chat -->
+    <div class="live-area">
+      <div class="stream">
+        <h2>🎥 Transmissão ao Vivo</h2>
+        <iframe src="https://www.youtube.com/embed/2g811Eo7K8U" allowfullscreen></iframe>
+      </div>
+      <div class="chat-wrapper">
+        <div class="chat-header">Chat ao Vivo</div>
+        <div class="chat-box" id="chat-box"></div>
+        <div class="chat-input">
+          <input type="text" id="user-input" placeholder="Escreva uma mensagem...">
+          <button onclick="sendMessage()">Enviar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const comandos = {
+      "!score": () => "\ud83d\udcca Placar: FURIA 11 x 8 NAVI",
+      "!next": () => "\u23ed\ufe0f Próximo jogo: FURIA vs G2 - 07/05 às 16:30",
+      "!furia": () => "\ud83d\udd25 Line-up da FURIA: Chelo, KSCERATO, yuurih, FalleN, arT",
+      "!help": () => "\ud83d\udcd8 Comandos: !score, !next, !furia, !help",
+    };
+
+    window.onload = () => {
+      const saved = localStorage.getItem("furiaChat");
+      if (saved) JSON.parse(saved).forEach(m => appendMessage(m));
+    };
+
+    function sendMessage() {
+      const inp = document.getElementById("user-input");
+      const text = inp.value.trim();
+      if (!text) return;
+
+      const userMsg = "Você: " + text;
+      appendMessage(userMsg);
+
+      const arr = JSON.parse(localStorage.getItem("furiaChat") || "[]");
+      arr.push(userMsg);
+      localStorage.setItem("furiaChat", JSON.stringify(arr));
+
+      // Verifica se é um comando
+      const resposta = comandos[text.toLowerCase()];
+      if (resposta) {
+        setTimeout(() => appendMessage("FURIA Bot: " + resposta()), 400);
+        arr.push("FURIA Bot: " + resposta());
+        localStorage.setItem("furiaChat", JSON.stringify(arr));
+      }
+
+      inp.value = "";
+    }
+
+    function appendMessage(m) {
+      const d = document.createElement("div");
+      d.className = "chat-message";
+      d.textContent = m;
+      document.getElementById("chat-box").appendChild(d);
+      document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+    }
+
+    document.getElementById("user-input").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
