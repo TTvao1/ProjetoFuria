@@ -7,5 +7,3 @@ O FURIA Fan Chat é uma aplicação interativa para fãs do time FURIA de CS:GO.
 - **Programação**: Exibe a programação dos jogos.
 - **Placar**: Mostra o placar ao vivo.
 - **Chat**: Permite que os usuários enviem mensagens e interajam com um bot que fornece informações sobre o placar e outros dados.
-
-- 
